@@ -1,6 +1,8 @@
+const path = require('path')
 const express = require('express');
 const app = express();
 const port = 3000;
+const root = path.join(__dirname, 'public')
 
 const pokemon = [
     { id: 1, name: 'Bulbasaur', type: 'Grass' },
@@ -14,19 +16,22 @@ const pokemon = [
     { id: 9, name: 'Blastoise', type: 'Water' },
 ]
 
-//allow to send json
+//allow to send json use is middle wear
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    response.send('hello');
-});
+//allow us to respond with static webpage
+app.use(express.static('public'))
 
-app.get('/test', (req, res) => {
-    response.send('Testing');
-}); 
+app.get('/', (request, response) => {
+    response.sendFile('index.html', { root })
+})
 
-app.get('/api/v1/random-pokemon', (req, res) => {
-    const randomNmber = Math.floor(Math.random() * 8) 
+// app.get('/test', (request, response) => {
+//     response.send('Testing');
+// }); 
+
+app.get('/api/v1/random-pokemon', (request, response) => {
+    const randomNmber = Math.floor(Math.random() * 9) 
     const randomPokemon = pokemon[randomNmber]
     response.send({ randomPokemon })
 });
