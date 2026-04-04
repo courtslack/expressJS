@@ -26,15 +26,20 @@ app.get('/', (request, response) => {
     response.sendFile('index.html', { root })
 })
 
-// app.get('/test', (request, response) => {
-//     response.send('Testing');
-// }); 
+app.get('/pokemon/???')
 
 app.get('/api/v1/random-pokemon', (request, response) => {
     const randomNmber = Math.floor(Math.random() * 9) 
     const randomPokemon = pokemon[randomNmber]
     response.send({ randomPokemon })
 });
+
+app.get('/api/v1/pokemon/:id', (request, response) => {
+    const { id } = request.params
+    const found = pokemon.find(p => p.id.toString() === id)
+    if (found) response.send(found)
+    else response.send({ error: { message: `Could not find pokemon with id: ${id}` }})
+})
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);
