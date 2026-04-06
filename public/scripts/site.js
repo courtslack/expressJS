@@ -5,24 +5,14 @@
     const { pathname } = window.location
     const [, searchType, id ] = pathname.split('/')
 
-    // const url = searchType === 'pokemon'
-    //     ? `/api/v1/pokemon/${id}`
-    //     : '/api/v1/random-pokemon'
-
-    // const getUrl = () => {
-    //     if (searchType === 'pokemon') return `/api/v1/pokemon/${id}`
-    //     if (searchType === 'type') return `/api/v1/random-pokemon/${id}`
-    //     return '/api/v1/random-pokemon'
-    // }
-
     const url = (() => {
         if (searchType === 'pokemon') return `/api/v1/pokemon/${id}`
-        if (searchType === 'type') return `/api/v1/random-pokemon/${id}`
-        return '/api/v1/random-pokemon'
+        if (searchType === 'type') return `/api/v1/pokemon/random${id}`
+        return '/api/v1/pokemon/random'
     }) ()
     
     const result = await fetch(url)
-    const { name, type } = await result.json()
+    const { name, type } = data.randomPokemon;
 
     h2.textContent = name
     h3.textContent = type

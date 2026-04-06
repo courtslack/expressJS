@@ -1,0 +1,22 @@
+### Variables
+@url = http://localhost:3000/api/v1
+
+### Random Pokemon
+GET {{ url }}/pokemon/random
+
+### Spacifit Pokemon
+GET {{ url }}/pokemon/5
+
+### Random Pokemon Type
+GET {{url}}/pokemon/ransom/{{type}}
+
+
+### Add new pokemon
+POST {{url}}/add
+Content-Type: application/json
+
+{ 
+    "id": 10,
+    "name": "Caterpie",
+    "type": "Bug"
+}
