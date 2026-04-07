@@ -1,6 +1,7 @@
 ### Variables
 @url = http://localhost:3000/api/v1
 
+@type = water
 ### Random Pokemon
 GET {{ url }}/pokemon/random
 
@@ -8,11 +9,11 @@ GET {{ url }}/pokemon/random
 GET {{ url }}/pokemon/5
 
 ### Random Pokemon Type
-GET {{url}}/pokemon/ransom/{{type}}
+GET {{url}}/pokemon/random/{{type}}
 
 
 ### Add new pokemon
-POST {{url}}/add
+POST {{url}}/pokemon/add
 Content-Type: application/json
 
 { 

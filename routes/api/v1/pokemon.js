@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { getCollection, ObjectId } = require('../../../dbconnect')
 
 const pokemon = [
     { id: 1, name: 'Bulbasaur', type: 'Grass' },
@@ -26,11 +27,18 @@ router.post('/add', (request, response) => {
     else pokemon.push({ id, name, type })
 })
 
-router.get('/:id', (request, response) => {
-    const { id } = request.params
-    const found = pokemon.find(p => p.id.toString() === id)
-    if (found) response.send(found)
-    else response.send({ error: { message: `Could not find pokemon with id: ${id}` }})
+// router.get('/:id', (request, response) => {
+//     const { id } = request.params
+//     const found = pokemon.find(p => p.id.toString() === id)
+//     if (found) response.send(found)
+//     else response.send({ error: { message: `Could not find pokemon with id: ${id}` }})
+// })
+
+router.get('/:number', async (request, response) => {
+    const { number } = request.params
+    const collection = await getCollection('PokemonAPI', 'Pokemon')
+    console.log(await collection.findOne({ "number": parseInt(number) }))
+    response.send('done')
 })
 
 router.get('/random/:type', (request, response) => {
