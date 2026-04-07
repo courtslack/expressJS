@@ -11,8 +11,8 @@
         return '/api/v1/pokemon/random'
     }) ()
     
-    const result = await fetch(url)
-    const { name, type } = data.randomPokemon;
+   const result = await fetch(url)
+    const { name, type } = await result.json()
 
     h2.textContent = name
     h3.textContent = type
