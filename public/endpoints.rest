@@ -30,3 +30,10 @@ Content-Type: application/json
     "name": "Metapod",
     "type": "Bug"
 }
+
+### Get All Pokemon
+ {{url}}/pokemon/
+
+
+### Get Pokemon By Name
+ {{url}}/pokemon/byName/ivysaur

@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { request, response } = require('express')
 const { getCollection, ObjectId } = require('../../../dbconnect')
 
 let collection = null  //If I don’t have the collection, go get it. If I already have it, just use it.
@@ -8,7 +9,7 @@ const getPokemon = async () => {
 }
 
 router.get('/byId/:id', async (request, response) => {
-    const { id } = request.params
+    const { id } = request.params 
     const collection = await getPokemon()
     const found = await collection.findOne({ _id: new ObjectId(id) })
     if (found) response.send(found)
@@ -22,6 +23,7 @@ router.get('/random', async (request, response) => {
     const found = await collection.findOne({ "number": parseInt(number) })
     if (found) response.send(found)
     else response.send({ error: { message: `Could not find pokemon with number: ${number}` }})
+    console.log('pokemon routes loaded')
 })
 
 router.post('/add', async (request, response) => {
@@ -53,6 +55,23 @@ router.get('/random/:type', async (request, response) => {
 
     // console.log(foundOfType);
     // response.send('done')
+})
+
+router.get('/', async (request, response) => {
+    const collection = await getPokemon()
+    const found = await collection.find().toArray() //gets all pokemon in array
+    response.send(found)
+})
+
+router.get('/byName/:name', async (request, response) => {
+    const { name } = request.params
+    const collection = await getPokemon()
+
+    const regexp = new RegExp(`^${name}`, 'i') //query parameters, to make the search case-insensitive
+    const found = await collection.findOne({ name: regexp })
+    if (found) response.send(found)
+    else response.send({ error: { message: `Could not find pokemon with name: ${name}` }})
+
 })
 
 module.exports = router
